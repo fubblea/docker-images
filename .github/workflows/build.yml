@@ -1,13 +1,10 @@
 name: Build and Deploy Docker Images
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
-
-env:
-  REGISTRY: ghrc.io
-  USERNAME: fubblea
 
 jobs:
   build-and-push-images:
@@ -20,7 +17,7 @@ jobs:
         include:
           # List all dockerfiles here
           - dockerfile: ./dioxus/Dockerfile
-            image: ${{ env.REGISTRY }}/${{ env.USERNAME }}/dioxus
+            image: ghrc.io/fubblea/dioxus
 
     permissions:
       contents: read
@@ -36,7 +33,7 @@ jobs:
       - name: Log in to the Container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
         with:
-          registry: ${{ env.REGISTRY }}
+          registry: ghrc.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
